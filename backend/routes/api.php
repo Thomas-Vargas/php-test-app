@@ -23,24 +23,8 @@ Route::get('users', function () {
 
 Route::post('users', [UserController::class, 'store']);
 
-// Route::get('products/{product}', function ($productId) {
-//     return response()->json(['productId' => "{$productId}"], 200);
-// });
- 
-// Route::post('products', function() {
-//     return  response()->json([
-//             'message' => 'Create success'
-//         ], 201);
-// });
-// Route::put('products/{product}', function() {
-// 	return  response()->json([
-//             'message' => 'Update success'
-//         ], 200);
-// });
-// Route::delete('products/{product}',function() {
-// 	return  response()->json(null, 204);
-// });
+Route::get('users/{id}', [UserController::class, 'show']);
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
+Route::delete('users/{id}', [UserController::class, 'destroy']);
+
+Route::put('users/{id}', [UserController::class, 'update']);

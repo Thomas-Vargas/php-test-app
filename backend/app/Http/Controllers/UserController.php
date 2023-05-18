@@ -51,7 +51,11 @@ class UserController extends Controller
      */
     public function show(string $id)
     {
-        //
+        // Retrieve the user from the database based on the given ID
+        $user = User::findOrFail($id);
+    
+        // Return the user as a JSON response
+        return response()->json($user, 200);
     }
 
     /**
@@ -67,14 +71,39 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        // Retrieve the user from the database based on the given ID
+        $user = User::findOrFail($id);
+    
+        // Validate the incoming request data
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email|unique:users,email,'.$user->id,
+        ]);
+    
+        // Update the user using the validated data
+        $user->update([
+            'name' => $validatedData['name'],
+            'email' => $validatedData['email'],
+        ]);
+    
+        // Optionally, you can perform additional actions or return a response
+        return response()->json(['message' => 'User updated successfully'], 200);
     }
+    
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-        //
+        // Retrieve the user from the database based on the given ID
+        $user = User::findOrFail($id);
+    
+        // Delete the user
+        $user->delete();
+    
+        // Return a success response
+        return response()->json(['message' => 'User deleted successfully'], 200);
     }
+    
 }
